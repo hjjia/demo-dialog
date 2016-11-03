@@ -9,6 +9,7 @@
 	* {box-sizing:border-box;}
 	.dialog-bg {position: fixed;z-index:9999;top: 0;right: 0;bottom: 0;left: 0;background-color: rgba(0,0,0,.4);}
 	.dialog {position: fixed;z-index:9999;top: 0;left: 0;width: 500px;min-height:100px;border: 1px solid #ebebeb;border-radius: 5px;background-color: #fff}
+	.dialog.dialog-msg {background-color: rgba(0, 0, 0, 0.8); text-align: center; line-height: 1.5;}
 	.dialog-inner {position: relative; width: 100%;height: auto;padding: 20px 20px 0;}
 	.dialog-close-btn {position: absolute; top: 20px; right: 20px;height: 30px;text-align:center;line-height: 30px;width: 50px;}
 	.dialog-title {height: 30px;line-height: 30px;border-bottom: 1px solid #ebebeb;}
@@ -48,15 +49,44 @@
 <script type="text/javascript" src="jquery-1.11.3.min.js"></script>
 <script type="text/javascript" src="dialog.js"></script>
 <script type="text/javascript">
-	Dialog.confirm({
+/*	Dialog.confirm({
 		title:"nihao",
 		content:"wobuhao"
-	});
+	});*/
+//	Dialog.alert('hello world!');
+
 /*
+Dialog.msg('hello ');
+*/
+
 	Dialog.open({
-		title:"nihao",
-		content:"wobuhao"
-	})*/
+		content:"我是open",
+		btn: ['显示确认弹框', '显示alert弹框'],
+		yes: function (index) {
+			Dialog.close(index);
+
+			Dialog.confirm({
+				content: '我是confirm弹框，点击确定按钮显示msg，取消按钮关闭所有弹框',
+				yes: function (index) {
+					Dialog.close(index);
+
+					Dialog.msg('hello world');
+//					Dialog.closeAll();
+				},
+				cancel: function () {
+					Dialog.closeAll();
+				}
+			})
+		},
+		cancel: function () {
+			Dialog.alert({
+				content: '确定要关闭所有的弹框么？',
+				yes: function () {
+					Dialog.closeAll();
+				}
+			});
+		}
+	});
 
 	// console.log($(window).scrollTop(),'----')
 
